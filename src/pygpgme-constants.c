@@ -164,6 +164,9 @@ static const struct pygpgme_constant constants[] = {
 
   /* gpgme_encrypt_flags_t */
   CONST(ENCRYPT_ALWAYS_TRUST),
+#if GPGME_VERSION_NUMBER >= 0x010500
+  CONST(ENCRYPT_NO_COMPRESS),
+#endif
 
   /* gpgme_sigsum_t */
   CONST(SIGSUM_VALID),
