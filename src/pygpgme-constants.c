@@ -87,6 +87,10 @@ static const struct pygpgme_constant constants[] = {
   CONST(PINENTRY_MODE_ERROR),
   CONST(PINENTRY_MODE_LOOPBACK),
 
+  /* gpgme_export_mode_t */
+  CONST(EXPORT_MODE_EXTERN),
+  CONST(EXPORT_MODE_MINIMAL),
+
   /* gpgme_status_code_t */
   CONST(STATUS_EOF),
   CONST(STATUS_ENTER),
