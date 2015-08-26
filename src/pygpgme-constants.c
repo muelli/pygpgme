@@ -90,10 +90,11 @@ static const struct pygpgme_constant constants[] = {
   /* gpgme_export_mode_t */
   CONST(EXPORT_MODE_EXTERN),
   CONST(EXPORT_MODE_MINIMAL),
-  CONST(EXPORT_MODE_MINIMAL),
+#if GPGME_VERSION_NUMBER >= 0x010600
   CONST(EXPORT_MODE_SECRET),
   CONST(EXPORT_MODE_RAW),
   CONST(EXPORT_MODE_PKCS12),
+#endif
 
   /* gpgme_status_code_t */
   CONST(STATUS_EOF),
