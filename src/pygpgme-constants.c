@@ -87,6 +87,15 @@ static const struct pygpgme_constant constants[] = {
   CONST(PINENTRY_MODE_ERROR),
   CONST(PINENTRY_MODE_LOOPBACK),
 
+  /* gpgme_export_mode_t */
+  CONST(EXPORT_MODE_EXTERN),
+  CONST(EXPORT_MODE_MINIMAL),
+#if GPGME_VERSION_NUMBER >= 0x010600
+  CONST(EXPORT_MODE_SECRET),
+  CONST(EXPORT_MODE_RAW),
+  CONST(EXPORT_MODE_PKCS12),
+#endif
+
   /* gpgme_status_code_t */
   CONST(STATUS_EOF),
   CONST(STATUS_ENTER),
@@ -164,6 +173,9 @@ static const struct pygpgme_constant constants[] = {
 
   /* gpgme_encrypt_flags_t */
   CONST(ENCRYPT_ALWAYS_TRUST),
+#if GPGME_VERSION_NUMBER >= 0x010500
+  CONST(ENCRYPT_NO_COMPRESS),
+#endif
 
   /* gpgme_sigsum_t */
   CONST(SIGSUM_VALID),

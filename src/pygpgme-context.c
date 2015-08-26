@@ -1262,10 +1262,11 @@ pygpgme_context_export(PyGpgmeContext *self, PyObject *args)
 {
     PyObject *py_pattern, *py_keydata;
     char **patterns = NULL;
+    int export_mode = 0;
     gpgme_data_t keydata;
     gpgme_error_t err;
 
-    if (!PyArg_ParseTuple(args, "OO", &py_pattern, &py_keydata))
+    if (!PyArg_ParseTuple(args, "OO|i", &py_pattern, &py_keydata, &export_mode))
         return NULL;
 
     if (parse_key_patterns(py_pattern, &patterns) < 0)
@@ -1278,7 +1279,7 @@ pygpgme_context_export(PyGpgmeContext *self, PyObject *args)
     }
 
     Py_BEGIN_ALLOW_THREADS;
-    err = gpgme_op_export_ext(self->ctx, (const char **)patterns, 0, keydata);
+    err = gpgme_op_export_ext(self->ctx, (const char **)patterns, export_mode, keydata);
     Py_END_ALLOW_THREADS;
 
     if (patterns)

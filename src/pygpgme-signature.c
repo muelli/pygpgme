@@ -101,6 +101,8 @@ pygpgme_sig_dealloc(PyGpgmeSignature *self)
     Py_XDECREF(self->wrong_key_usage);
     Py_XDECREF(self->validity);
     Py_XDECREF(self->validity_reason);
+    Py_XDECREF(self->pubkey_algo);
+    Py_XDECREF(self->hash_algo);
     PyObject_Del(self);
 }
 
@@ -117,6 +119,8 @@ static PyMemberDef pygpgme_sig_members[] = {
     { "validity", T_OBJECT, offsetof(PyGpgmeSignature, validity), READONLY},
     { "validity_reason", T_OBJECT,
       offsetof(PyGpgmeSignature, validity_reason), READONLY},
+    { "pubkey_algo", T_OBJECT, offsetof(PyGpgmeSignature, pubkey_algo), READONLY},
+    { "hash_algo", T_OBJECT, offsetof(PyGpgmeSignature, hash_algo), READONLY},
     { NULL, 0, 0, 0}
 };
 
@@ -173,6 +177,8 @@ pygpgme_siglist_new(gpgme_signature_t siglist)
         item->wrong_key_usage = PyBool_FromLong(sig->wrong_key_usage);
         item->validity = PyInt_FromLong(sig->validity);
         item->validity_reason = pygpgme_error_object(sig->validity_reason);
+        item->pubkey_algo = PyInt_FromLong(sig->pubkey_algo);
+        item->hash_algo = PyInt_FromLong(sig->hash_algo);
         if (PyErr_Occurred()) {
             Py_DECREF(item);
             Py_DECREF(list);
