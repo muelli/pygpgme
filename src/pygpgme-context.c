@@ -76,7 +76,7 @@ pygpgme_context_dealloc(PyGpgmeContext *self)
         gpgme_release(self->ctx);
     }
     self->ctx = NULL;
-    PyObject_Del(self);
+    self->ob_type->tp_free((PyObject*)self);
 }
 
 static int
@@ -1510,7 +1510,7 @@ PyTypeObject PyGpgmeContext_Type = {
     PyVarObject_HEAD_INIT(NULL, 0)
     "gpgme.Context",
     sizeof(PyGpgmeContext),
-    .tp_flags = Py_TPFLAGS_DEFAULT,
+    .tp_flags = Py_TPFLAGS_DEFAULT |  Py_TPFLAGS_BASETYPE,
     .tp_dealloc = (destructor)pygpgme_context_dealloc,
     .tp_init = (initproc)pygpgme_context_init,
     .tp_getset = pygpgme_context_getsets,
