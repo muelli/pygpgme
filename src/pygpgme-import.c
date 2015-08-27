@@ -66,6 +66,40 @@ static PyMemberDef pygpgme_import_members[] = {
     { NULL, 0, 0, 0}
 };
 
+
+#define PyString_Append_Property(string, prop)  do {                   \
+    PyString_ConcatAndDel (&string, PyString_FromString (" "  #prop ": "));  \
+    PyString_ConcatAndDel (&string, PyObject_Repr(self->prop ));        \
+} while (0);
+
+static PyObject *
+pygpgme_import_repr(PyGpgmeImportResult * self)
+{
+    PyObject* s = PyString_FromString("<Import");
+
+    PyString_Append_Property (s, considered);
+    PyString_Append_Property (s, no_user_id);
+    PyString_Append_Property (s, imported);
+    PyString_Append_Property (s, imported_rsa);
+    PyString_Append_Property (s, unchanged);
+    PyString_Append_Property (s, new_user_ids);
+    PyString_Append_Property (s, new_sub_keys);
+    PyString_Append_Property (s, new_signatures);
+    PyString_Append_Property (s, new_revocations);
+    PyString_Append_Property (s, secret_read);
+    PyString_Append_Property (s, secret_imported);
+    PyString_Append_Property (s, secret_unchanged);
+    PyString_Append_Property (s, skipped_new_keys);
+    PyString_Append_Property (s, not_imported);
+    PyString_Append_Property (s, imports);
+    
+    PyString_ConcatAndDel (&s, PyString_FromString (">"));
+    
+    return s;
+}
+
+#undef PyString_Append_Property
+
 PyTypeObject PyGpgmeImportResult_Type = {
     PyVarObject_HEAD_INIT(NULL, 0)
     "gpgme.Import",
@@ -74,6 +108,7 @@ PyTypeObject PyGpgmeImportResult_Type = {
     .tp_init = pygpgme_no_constructor,
     .tp_dealloc = (destructor)pygpgme_import_dealloc,
     .tp_members = pygpgme_import_members,
+    .tp_repr = (reprfunc) pygpgme_import_repr,
 };
 
 PyObject *
