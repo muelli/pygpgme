@@ -38,7 +38,7 @@ pygpgme_import_dealloc(PyGpgmeImportResult *self)
     Py_XDECREF(self->skipped_new_keys);
     Py_XDECREF(self->not_imported);
     Py_XDECREF(self->imports);
-    PyObject_Del(self);
+    self->ob_type->tp_free((PyObject*)self);
 }
 
 static PyMemberDef pygpgme_import_members[] = {
@@ -70,7 +70,7 @@ PyTypeObject PyGpgmeImportResult_Type = {
     PyVarObject_HEAD_INIT(NULL, 0)
     "gpgme.Import",
     sizeof(PyGpgmeImportResult),
-    .tp_flags = Py_TPFLAGS_DEFAULT,
+    .tp_flags = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_BASETYPE,
     .tp_init = pygpgme_no_constructor,
     .tp_dealloc = (destructor)pygpgme_import_dealloc,
     .tp_members = pygpgme_import_members,
